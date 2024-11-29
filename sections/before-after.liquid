@@ -1,0 +1,93 @@
+{% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+ {% endcomment %}
+{{ 'ba-slider.js' | asset_url | script_tag  }}
+{{ 'ba-style.css' | asset_url | stylesheet_tag  }}
+
+{%- if section.settings.title != blank -%}
+<div class="section__heading section__heading--slider flex flex-align-space-between flex-align-ver">
+    <div class="section__title">
+        <h2 class="section__title__text margin0 tbs-text-center">
+            {{ section.settings.title }}
+        </h2>
+    </div>
+</div>
+{%- endif -%}
+
+<div class="custom-comparison-slider-wrapper section-{{section.id}}">
+    <div id="ba-slider" class="custom-comparison-slider">
+            <img src="{{ section.settings.before | img_url: 'master' }}"/>
+        <div class="cstmresize">
+            <img src="{{ section.settings.after | img_url: 'master' }}"/>
+        </div>
+        <div class="cstmdivider"></div>
+    </div>
+</div>
+<script>
+setTimeout(function(){
+    $(document).ready(function () {
+        baSlider("#ba-slider");
+    });
+}, 800)
+</script>
+<style>
+.section-{{section.id}} .cstmresize:before{
+    content: '{{ section.settings.before_text }}'
+}
+.section-{{section.id}} div#ba-slider:after{
+    content: '{{ section.settings.after_text }}'
+}
+</style>
+
+
+{% schema %}
+    {
+        "name": "Before after",
+        "class": "before-after",
+        "settings": [
+            {
+                "type": "text",
+                "id": "before_text",
+                "label": "Before text",
+                "default": "Before"
+            },
+            {
+                "type": "text",
+                "id": "after_text",
+                "label": "After text",
+                "default": "After"
+            },
+            {
+                "type": "image_picker",
+                "id": "before",
+                "label": "Before image"
+            },
+            {
+                "type": "image_picker",
+                "id": "after",
+                "label": "After image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "3D Wooden World Map Multicolor"
+            },
+            {
+                "type": "url",
+                "id": "url",
+                "label": "URL"
+            },
+            {
+                "type": "text",
+                "id": "btn_title",
+                "label": "BTN Title",
+                "default": "Learn more!"
+            }
+        ],
+        "presets":[
+            {
+                "name":"Before after"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,96 @@
+{{ 'image-comparsion.min.js' | asset_url | script_tag  }}
+
+<style>
+    img-comparison-slider {
+        visibility: hidden;
+        max-width: 1300px;
+        margin: 0 auto;
+        width: 100%;
+        max-height: 700px;
+        height: 100%;
+      }
+
+      img-comparison-slider [slot='second'] {
+        display: none;
+      }
+
+      img-comparison-slider.rendered {
+        visibility: inherit;
+      }
+
+      img-comparison-slider.rendered [slot='second'] {
+        display: unset;
+      }
+      .before,
+      .after {
+        margin: 0;
+      }
+
+      .before figcaption,
+      .after figcaption {
+        background: #fff;
+        border: 1px solid #c0c0c0;
+        border-radius: 12px;
+        color: #2e3452;
+        opacity: 0.8;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 100%;
+      }
+
+      .before figcaption {
+        left: 12px;
+      }
+
+      .after figcaption {
+        right: 12px;
+      }
+
+      *:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+</style>
+
+<div class="page-width">
+  {% comment %} <img-comparison-slider>
+    <img slot="first" src="{{ section.settings.before | image_url: width: 1450 }}" />
+    <img slot="second" src="{{ section.settings.after | image_url: width: 1450 }}" />
+  </img-comparison-slider> {% endcomment %}
+  <img-comparison-slider>
+  <figure slot="first" class="before">
+    <img width="100%" src="{{ section.settings.before | image_url: width: 1450 }}">
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure slot="second" class="after">
+    <img width="100%" src="{{ section.settings.after | image_url: width: 1450 }}">
+    <figcaption>After</figcaption>
+  </figure>
+</img-comparison-slider>
+</div>
+
+{% schema %}
+{
+    "name": "Comparsion Slider",
+    "class": "ba-slider",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "before",
+            "label": "Before image"
+        },
+        {
+            "type": "image_picker",
+            "id": "after",
+            "label": "After image"
+        }
+    ],
+    "presets":[
+        {
+            "name":"Comparsion Slider"
+        }
+    ]
+}
+{% endschema %}
